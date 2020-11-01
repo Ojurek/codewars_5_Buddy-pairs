@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cassert>
+#include <sstream>
+#include <chrono>
 
 using namespace std;
 
@@ -21,14 +23,16 @@ namespace Bud
     string buddy(long long start, long long limit)
     {
         long long m;
+        stringstream result;
         for (long long n = start; n <= limit; n++)
         {
             m = sumOfDivision(n) - 1;
             if (m > n)
                 if (sumOfDivision(m) == n + 1)
                 {
-                    cout << "n:" << n << ", m:" << m << endl;
-                    return "(1081184 1331967)";
+                    result << "(" << n << " " << m << ")";
+                    cout << result.str() << endl;
+                    return result.str();
                 }
         }
         return "Nothing";
@@ -39,8 +43,13 @@ using namespace Bud;
 
 int main(int argc, char const *argv[])
 {
+    auto start = chrono::steady_clock::now();
+    assert(buddy(47, 50) == "(48 75)");
     assert(buddy(1071625, 1103735) == "(1081184 1331967)");
     assert(buddy(2382, 3679) == "Nothing");
     assert(buddy(8983, 13355) == "(9504 20735)");
+    cout << "Done" << endl;
+    auto stop = chrono::steady_clock::now();
+    cout << "Elapsed time in sec: " << chrono::duration_cast<chrono::seconds>(stop - start).count() << endl;
     return 0;
 }
