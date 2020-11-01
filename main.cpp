@@ -1,18 +1,17 @@
 #include <iostream>
 #include <cassert>
 #include <sstream>
-#include <chrono>
 
 using namespace std;
 
 long long sumOfDivision(long long &number)
 {
     long long sum = 1;
-    for (long long i = 2; i < number; i++)
+    for (long long i = 2; i < (number / i); i++)
     {
-        if (number % i == 0)
+        if ((number % i) == 0)
         {
-            sum += i;
+            sum += i + (number / i);
         }
     }
     return sum;
